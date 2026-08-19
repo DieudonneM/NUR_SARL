@@ -1,0 +1,1 @@
+web: gunicorn nur_core.wsgi:application
