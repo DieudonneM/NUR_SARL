@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À propos | NUR{% endblock %}
+{% block meta_description %}Découvrez NUR, entreprise technologique basée à Kinshasa, spécialisée en data et intelligence artificielle, solutions logicielles et infrastructures numériques.{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="about-hero" id="identite">
+        <div class="about-hero-grid" aria-hidden="true"></div>
+        <div class="about-hero-copy">
+            <p class="about-kicker">À propos de NUR</p>
+            <h1>Faire de la technologie<br><span>un levier de maîtrise.</span></h1>
+            <p>NUR est une entreprise technologique basée à Kinshasa. Nous aidons les organisations à mieux exploiter leurs données, digitaliser leurs opérations et bâtir des infrastructures fiables.</p>
+        </div>
+        <div class="about-emblem" aria-hidden="true">
+            <img src="{% static 'img/NUR SA PNG.png' %}" alt="">
+            <span>Data · Software · Network</span>
+        </div>
+        <a class="about-scroll" href="#vision"><i></i> Notre vision</a>
+    </section>
+
+    <section class="manifesto about-section" id="vision">
+        <div class="about-index reveal"><span>01</span> Notre vision</div>
+        <div class="manifesto-content">
+            <p class="manifesto-lead reveal">La transformation numérique ne se résume pas à déployer des outils.</p>
+            <h2 class="reveal">Elle consiste à construire des systèmes qui rendent les organisations plus lisibles, plus agiles et plus autonomes.</h2>
+            <div class="manifesto-note reveal">
+                <span>N</span>
+                <p>Notre rôle est de relier la stratégie, les usages et la technologie pour produire des solutions réellement adoptées sur le terrain.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="identity-band">
+        <div class="identity-word" aria-hidden="true">NUR</div>
+        <div class="identity-content reveal">
+            <p class="about-kicker">Notre identité</p>
+            <h2>Une expertise complète.<br>Un interlocuteur engagé.</h2>
+            <p>Nous réunissons conseil, conception, intégration, maintenance et transfert de compétences. Cette continuité nous permet de garder une vision d'ensemble, du premier diagnostic jusqu'à l'évolution de la solution.</p>
+        </div>
+        <div class="identity-facts">
+            <div class="fact reveal"><strong>Kinshasa</strong><span>Ancrage en République démocratique du Congo</span></div>
+            <div class="fact reveal"><strong>3 pôles</strong><span>Data & IA, logiciels, réseaux & infrastructures</span></div>
+            <div class="fact reveal"><strong>360°</strong><span>Du conseil au support opérationnel</span></div>
+        </div>
+    </section>
+
+    <section class="approach about-section" id="approche">
+        <div class="approach-heading reveal">
+            <div class="about-index"><span>02</span> Notre approche</div>
+            <h2>Une méthode claire, de l'enjeu au résultat.</h2>
+        </div>
+        <div class="approach-steps">
+            <article class="approach-step reveal">
+                <span>01</span>
+                <h3>Comprendre</h3>
+                <p>Observer les usages, clarifier les objectifs et identifier les contraintes qui comptent réellement.</p>
+            </article>
+            <article class="approach-step reveal">
+                <span>02</span>
+                <h3>Concevoir</h3>
+                <p>Définir une architecture cohérente, un parcours simple et une trajectoire adaptée aux priorités.</p>
+            </article>
+            <article class="approach-step reveal">
+                <span>03</span>
+                <h3>Déployer</h3>
+                <p>Construire, intégrer et sécuriser la solution avec des étapes visibles et des décisions partagées.</p>
+            </article>
+            <article class="approach-step reveal">
+                <span>04</span>
+                <h3>Faire évoluer</h3>
+                <p>Former les équipes, maintenir les systèmes et accompagner leur évolution dans la durée.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="principles about-section">
+        <div class="principles-heading reveal">
+            <div class="about-index"><span>03</span> Ce qui nous guide</div>
+            <h2>Nos principes de travail.</h2>
+        </div>
+        <div class="principle-list">
+            <article class="principle reveal">
+                <span>01</span><h3>Clarté</h3><p>Rendre compréhensibles les choix techniques et leurs impacts.</p>
+            </article>
+            <article class="principle reveal">
+                <span>02</span><h3>Utilité</h3><p>Concevoir autour des usages et de la valeur réellement créée.</p>
+            </article>
+            <article class="principle reveal">
+                <span>03</span><h3>Fiabilité</h3><p>Construire des solutions robustes, sécurisées et maintenables.</p>
+            </article>
+            <article class="principle reveal">
+                <span>04</span><h3>Transmission</h3><p>Renforcer l'autonomie grâce à la formation et au partage de compétences.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="about-cta">
+        <div class="about-cta-mark" aria-hidden="true">N</div>
+        <p class="about-kicker reveal">Allons plus loin</p>
+        <h2 class="reveal">Votre prochain défi mérite<br>une réponse sur mesure.</h2>
+        <div class="about-cta-actions reveal">
+            <a class="about-button" href="{% url 'contact' %}">Échangeons sur votre projet <span>→</span></a>
+            <a class="about-text-link" href="{% url 'home' %}#expertises">Découvrir nos expertises</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

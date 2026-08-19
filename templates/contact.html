@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact | NUR{% endblock %}
+{% block meta_description %}Présentez votre projet data, logiciel ou infrastructure à l'équipe NUR.{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="contact-page">
+        <div class="contact-intro">
+            <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Retour à l'accueil</a>
+            <p class="contact-kicker">Démarrer une collaboration</p>
+            <h1>Parlons de ce que<br><span>nous pouvons construire.</span></h1>
+            <p class="contact-lead">Un besoin data, une solution métier ou une infrastructure à déployer ? Partagez-nous votre contexte. Nous reviendrons vers vous avec une première lecture claire de votre projet.</p>
+
+            <div class="contact-details">
+                <a href="mailto:contact@nursa.com">
+                    <span class="detail-label">E-mail</span>
+                    <strong>contact@nursa.com</strong>
+                    <span aria-hidden="true">↗</span>
+                </a>
+                <div>
+                    <span class="detail-label">Implantation</span>
+                    <strong>Kinshasa, RDC</strong>
+                </div>
+            </div>
+
+            <div class="expertise-line" aria-label="Expertises NUR">
+                <span>Data & IA</span><span>Logiciels</span><span>Infrastructures</span>
+            </div>
+        </div>
+
+        <div class="form-shell">
+            {% if sent %}
+                <div class="success-state" role="status">
+                    <span class="success-icon" aria-hidden="true">✓</span>
+                    <p class="form-index">Message reçu</p>
+                    <h2>Merci pour votre confiance.</h2>
+                    <p>Votre demande a bien été transmise. Notre équipe vous répondra dans les meilleurs délais.</p>
+                    <a class="submit-button" href="{% url 'home' %}">Retour à l'accueil <span aria-hidden="true">→</span></a>
+                </div>
+            {% else %}
+                <div class="form-heading">
+                    <p class="form-index">Votre projet · 01</p>
+                    <h2>Donnez-nous les premiers repères.</h2>
+                    <p>Les champs marqués d'un astérisque sont obligatoires.</p>
+                </div>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="field{% if form.name.errors %} has-error{% endif %}">
+                            <label for="id_name">Nom complet <span>*</span></label>
+                            <input id="id_name" name="name" type="text" value="{{ form.name.value|default:'' }}" autocomplete="name" required>
+                            {% for error in form.name.errors %}<small>{{ error }}</small>{% endfor %}
+                        </div>
+                        <div class="field{% if form.email.errors %} has-error{% endif %}">
+                            <label for="id_email">E-mail professionnel <span>*</span></label>
+                            <input id="id_email" name="email" type="email" value="{{ form.email.value|default:'' }}" autocomplete="email" required>
+                            {% for error in form.email.errors %}<small>{{ error }}</small>{% endfor %}
+                        </div>
+                        <div class="field">
+                            <label for="id_organization">Organisation</label>
+                            <input id="id_organization" name="organization" type="text" value="{{ form.organization.value|default:'' }}" autocomplete="organization">
+                        </div>
+                        <div class="field">
+                            <label for="id_phone">Téléphone</label>
+                            <input id="id_phone" name="phone" type="tel" value="{{ form.phone.value|default:'' }}" autocomplete="tel">
+                        </div>
+                        <div class="field field-wide{% if form.service.errors %} has-error{% endif %}">
+                            <label for="id_service">Expertise recherchée <span>*</span></label>
+                            <div class="select-wrap">
+                                <select id="id_service" name="service" required>
+                                    {% for value, label in form.fields.service.choices %}
+                                        <option value="{{ value }}"{% if form.service.value == value %} selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% for error in form.service.errors %}<small>{{ error }}</small>{% endfor %}
+                        </div>
+                        <div class="field field-wide{% if form.message.errors %} has-error{% endif %}">
+                            <label for="id_message">Parlez-nous de votre projet <span>*</span></label>
+                            <textarea id="id_message" name="message" rows="5" maxlength="3000" placeholder="Contexte, objectifs, contraintes ou délais..." required>{{ form.message.value|default:'' }}</textarea>
+                            <div class="field-meta">
+                                {% for error in form.message.errors %}<small>{{ error }}</small>{% endfor %}
+                                <span id="message-count">0 / 3000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="submit-button" type="submit">Envoyer ma demande <span aria-hidden="true">→</span></button>
+                    <p class="privacy-note">Vos informations sont utilisées uniquement pour répondre à votre demande.</p>
+                </form>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/home.js' %}"></script>
+    <script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}
