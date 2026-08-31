@@ -5,5 +5,5 @@ db.sqlite3
 staticfiles/
 venv/
 .venv/
-.git
-git
+.ss.txt
+ss.txt
