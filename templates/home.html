@@ -146,6 +146,84 @@
         <a class="partner-link reveal" href="{% url 'contact' %}">Devenir partenaire de NUR <span aria-hidden="true">→</span></a>
     </section>
 
+
+    {% if portfolio_items %}
+    <section class="portfolio section" id="portfolio" aria-label="Portfolio et activités">
+        <div class="portfolio-header reveal">
+            <div class="section-label"><span>05</span> Portfolio & activités</div>
+            <h2>Nos interventions<br>en direct du terrain.</h2>
+            <p>Un sujet mis en lumière à la fois, avec ses visuels en mouvement et son récit.</p>
+        </div>
+
+        <div class="portfolio-stage-wrap">
+            <div class="portfolio-stage" data-portfolio-stage>
+                {% for item in portfolio_items %}
+                <article
+                    class="portfolio-spotlight{% if forloop.first %} is-active{% endif %}"
+                    data-spotlight-item
+                    data-summary="{{ item.summary|escape }}"
+                    data-title="{{ item.title|escape }}"
+                    {% if item.location_or_client %}data-meta="{{ item.location_or_client|escape }}"{% endif %}
+                >
+                    <div class="portfolio-visual-frame">
+                        {% if item.carousel_images %}
+                        <div class="portfolio-slides-strip" data-slides-strip>
+                            {% for img in item.carousel_images %}
+                            <div class="portfolio-slide-panel" data-slide-panel>
+                                <img
+                                    src="{{ img.image.url }}"
+                                    alt="{{ img.caption|default:item.title }}"
+                                    loading="eager"
+                                >
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="portfolio-empty-frame"><span>N</span></div>
+                        {% endif %}
+
+                        <span class="portfolio-badge">{{ item.get_pole_display }}</span>
+
+                        {% if item.carousel_images|length > 1 %}
+                        <div class="portfolio-img-indicators" aria-hidden="true">
+                            {% for img in item.carousel_images %}
+                            <span class="{% if forloop.first %}is-active{% endif %}" data-img-dot></span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="portfolio-caption-box">
+                        {% if item.location_or_client %}
+                        <p class="portfolio-client" data-type-meta>{{ item.location_or_client }}</p>
+                        {% endif %}
+                        <h3 class="portfolio-subject-title" data-type-title>{{ item.title }}</h3>
+                        <p class="portfolio-subject-text" data-type-summary>{{ item.summary }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            {% if portfolio_items|length > 1 %}
+            <div class="portfolio-subject-nav" aria-label="Sujets du portfolio">
+                {% for item in portfolio_items %}
+                <button
+                    type="button"
+                    class="portfolio-subject-pill{% if forloop.first %} is-active{% endif %}"
+                    data-subject-dot="{{ forloop.counter0 }}"
+                    aria-label="Afficher le sujet {{ forloop.counter }} : {{ item.title }}"
+                >
+                    <span>0{{ forloop.counter }}</span>
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+
+
+
     <section class="contact section" id="contact">
         <p class="eyebrow reveal">Conseil · Intégration · Formation</p>
         <h2 class="reveal">Construisons votre<br>prochaine solution.</h2>

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "nur_core",
 ]
 
 MIDDLEWARE = [
@@ -171,18 +172,7 @@ if (
 ):
     raise RuntimeError('EMAIL_HOST must be set when using the SMTP email backend')
 
-DEFAULT_FROM_EMAIL = os.getenv(
-    'DEFAULT_FROM_EMAIL',
-    'NUR <contact@nursarl.com>',
-)
-CONTACT_EMAILS = [
-    address.strip()
-    for address in os.getenv(
-        'CONTACT_EMAILS',
-        'dmuhemedi5@gmail.com,contact@nursarl.com',
-    ).split(',')
-    if address.strip()
-]
-
-if not CONTACT_EMAILS:
-    raise RuntimeError('At least one address must be set in CONTACT_EMAILS')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'NUR <contact@nursa.com>')
+CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@nursa.com')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
