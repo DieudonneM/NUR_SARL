@@ -1,3 +1,5 @@
+import smtplib
+
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
@@ -36,13 +38,30 @@ def contact(request, sent=False):
             f"Expertise : {service}\n\n"
             f"Message :\n{data['message']}"
         )
-        EmailMessage(
-            subject=f"Nouvelle demande NUR - {service}",
-            body=body,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=settings.CONTACT_EMAIL,
-            reply_to=[data["email"]],
-        ).send()
-        return redirect("contact-sent")
+        recipients = getattr(settings, "CONTACT_EMAILS", None)
+        if not recipients:
+            recipients = getattr(settings, "CONTACT_EMAIL", None)
+        if isinstance(recipients, str):
+            recipients = [email.strip() for email in recipients.split(",") if email.strip()]
+        else:
+            recipients = [email.strip() for email in recipients if email.strip()]
+
+        try:
+            sent_count = EmailMessage(
+                subject=f"Nouvelle demande NUR - {service}",
+                body=body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=recipients,
+                reply_to=[data["email"]],
+            ).send()
+            if sent_count:
+                return redirect("contact-sent")
+        except (smtplib.SMTPException, OSError):
+            pass
+
+        form.add_error(
+            None,
+            "Votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous écrire directement.",
+        )
 
     return render(request, "contact.html", {"form": form, "sent": sent})

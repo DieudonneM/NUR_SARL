@@ -182,6 +182,19 @@
     line-height: 1.6;
 }
 
+.form-errors {
+    background: #fff1ed;
+    border-left: 3px solid #b32400;
+    margin-bottom: 1.5rem;
+    padding: 0.8rem 1rem;
+}
+
+.form-errors p {
+    color: #7e1d05;
+    font-size: 0.82rem;
+    margin: 0;
+}
+
 .form-grid {
     display: grid;
     gap: 1.6rem 1.4rem;

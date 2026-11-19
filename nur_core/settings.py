@@ -172,7 +172,14 @@ if (
 ):
     raise RuntimeError('EMAIL_HOST must be set when using the SMTP email backend')
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'NUR <contact@nursa.com>')
-CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@nursa.com')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'NUR <contact@nursarl.com>')
+CONTACT_EMAILS = [
+    email.strip()
+    for email in os.getenv(
+        'CONTACT_EMAILS',
+        os.getenv('CONTACT_EMAIL', 'contact@nursarl.com'),
+    ).split(',')
+    if email.strip()
+]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
