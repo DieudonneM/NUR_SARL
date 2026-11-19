@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "nur_core",
 ]
 
 MIDDLEWARE = [
@@ -169,3 +170,5 @@ MAILERS = {
 
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'NUR <contact@nursa.com>')
 CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@nursa.com')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

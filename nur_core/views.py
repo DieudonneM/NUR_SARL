@@ -3,6 +3,23 @@ from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 
 from .forms import ContactForm
+from .models import PortfolioItem
+
+
+def home(request):
+    portfolio_items = list(
+        PortfolioItem.objects.filter(is_published=True).prefetch_related("images")
+    )
+    for item in portfolio_items:
+        item.carousel_images = list(item.images.all())[: PortfolioItem.MAX_IMAGES]
+
+    return render(
+        request,
+        "home.html",
+        {
+            "portfolio_items": portfolio_items,
+        },
+    )
 
 
 def contact(request, sent=False):
