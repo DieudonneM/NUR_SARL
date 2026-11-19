@@ -51,7 +51,7 @@ def contact(request, sent=False):
                 subject=f"Nouvelle demande NUR - {service}",
                 body=body,
                 #from_email=settings.DEFAULT_FROM_EMAIL,
-                from_email='contact@nursarl.com',
+                from_email=settings.EMAIL_HOST_USER,
                 to=recipients,
                 reply_to=[data["email"]],
             ).send()
