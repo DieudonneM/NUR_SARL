@@ -148,24 +148,41 @@ SECURE_HSTS_PRELOAD = not DEBUG
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': (
-            'django.core.mail.backends.console.EmailBackend'
-            if DEBUG
-            else 'django.core.mail.backends.smtp.EmailBackend'
-        ),
-        'OPTIONS': {} if DEBUG else {
-            'host': os.getenv('EMAIL_HOST', ''),
-            'port': int(os.getenv('EMAIL_PORT', '587')),
-            'username': os.getenv('EMAIL_HOST_USER', ''),
-            'password': os.getenv('EMAIL_HOST_PASSWORD', ''),
-            'use_tls': os.getenv('EMAIL_USE_TLS', 'True').lower()
-            in {'1', 'true', 'yes'},
-            'timeout': 10,
-        },
-    },
-}
+EMAIL_BACKEND = os.getenv(
+    'EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend'
+    if DEBUG
+    else 'django.core.mail.backends.smtp.EmailBackend',
+)
+EMAIL_HOST = os.getenv('EMAIL_HOST', '')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in {'1', 'true', 'yes'}
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False').lower() in {'1', 'true', 'yes'}
+EMAIL_TIMEOUT = 10
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'NUR <contact@nursa.com>')
-CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@nursa.com')
+if EMAIL_USE_TLS and EMAIL_USE_SSL:
+    raise RuntimeError('EMAIL_USE_TLS and EMAIL_USE_SSL cannot both be enabled')
+
+if (
+    EMAIL_BACKEND == 'django.core.mail.backends.smtp.EmailBackend'
+    and not EMAIL_HOST
+):
+    raise RuntimeError('EMAIL_HOST must be set when using the SMTP email backend')
+
+DEFAULT_FROM_EMAIL = os.getenv(
+    'DEFAULT_FROM_EMAIL',
+    'NUR <contact@nursarl.com>',
+)
+CONTACT_EMAILS = [
+    address.strip()
+    for address in os.getenv(
+        'CONTACT_EMAILS',
+        'dmuhemedi5@gmail.com,contact@nursarl.com',
+    ).split(',')
+    if address.strip()
+]
+
+if not CONTACT_EMAILS:
+    raise RuntimeError('At least one address must be set in CONTACT_EMAILS')

@@ -23,7 +23,7 @@ def contact(request, sent=False):
             subject=f"Nouvelle demande NUR - {service}",
             body=body,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[settings.CONTACT_EMAIL],
+            to=settings.CONTACT_EMAILS,
             reply_to=[data["email"]],
         ).send()
         return redirect("contact-sent")
