@@ -50,7 +50,8 @@ def contact(request, sent=False):
             sent_count = EmailMessage(
                 subject=f"Nouvelle demande NUR - {service}",
                 body=body,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                #from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email='contact@nursarl.com',
                 to=recipients,
                 reply_to=[data["email"]],
             ).send()
